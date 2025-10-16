@@ -1,10 +1,11 @@
-import Navbar from "./components/navbar";
+import Appointment from "./components/appointment";
+import MainLayout from "./layouts/main-layout";
 
 function App() {
   return (
-    <>
-      <Navbar />
-    </>
+    <MainLayout>
+      <Appointment />
+    </MainLayout>
   );
 }
 
