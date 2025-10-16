@@ -79,7 +79,7 @@ export default function Navbar() {
             {navItems.map(({ name, path }, i) => (
               <a
                 key={i}
-                className="font-medium  hover:text-scooter-500 transition duration-200 focus:outline-hidden focus:text-gray-400"
+                className="font-medium  hover:text-scooter-500 transition duration-200 focus:outline-hidden "
                 href={path}
               >
                 {name}
