@@ -1,6 +1,8 @@
+import { navItems } from "../static-data";
+
 export default function Navbar() {
   return (
-    <header className="relative flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-white text-sm py-3 dark:bg-neutral-800">
+    <header className="relative flex flex-wrap text-white sm:justify-start sm:flex-nowrap w-full bg-brand-dark text-sm py-3">
       <nav className="max-w-[85rem] w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between">
         <div className="flex items-center justify-between">
           <a
@@ -41,9 +43,9 @@ export default function Navbar() {
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
                 <line x1="3" x2="21" y1="6" y2="6" />
                 <line x1="3" x2="21" y1="12" y2="12" />
@@ -74,31 +76,15 @@ export default function Navbar() {
           aria-labelledby="hs-navbar-example-collapse"
         >
           <div className="flex flex-col gap-5 mt-5 sm:flex-row sm:items-center sm:justify-end sm:mt-0 sm:ps-5">
-            <a
-              className="font-medium text-blue-500 focus:outline-hidden"
-              href="#"
-              aria-current="page"
-            >
-              Landing
-            </a>
-            <a
-              className="font-medium text-gray-600 hover:text-gray-400 focus:outline-hidden focus:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500"
-              href="#"
-            >
-              Account
-            </a>
-            <a
-              className="font-medium text-gray-600 hover:text-gray-400 focus:outline-hidden focus:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500"
-              href="#"
-            >
-              Work
-            </a>
-            <a
-              className="font-medium text-gray-600 hover:text-gray-400 focus:outline-hidden focus:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500"
-              href="#"
-            >
-              Blog
-            </a>
+            {navItems.map(({ name, path }, i) => (
+              <a
+                key={i}
+                className="font-medium  hover:text-scooter-500 transition duration-200 focus:outline-hidden focus:text-gray-400"
+                href={path}
+              >
+                {name}
+              </a>
+            ))}
           </div>
         </div>
       </nav>
