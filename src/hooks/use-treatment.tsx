@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useEcho } from "@laravel/echo-react";
-import { type ITreatment } from "../general";
+import type { ITreatment } from "../general.d.ts";
 
 export function useTreatments() {
   const queryClient = useQueryClient();
