@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTreatments } from "../hooks/use-treatment";
 
 interface FormData {
   name: string;
@@ -40,6 +41,8 @@ export default function Appointment() {
     // TODO: Replace with actual API call when ready
     // Example: fetch('/api/book-appointment', { method: 'POST', body: JSON.stringify(formData) });
   };
+
+  const { data: treatments } = useTreatments();
 
   return (
     <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
@@ -186,11 +189,11 @@ export default function Appointment() {
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           >
             <option value="">Select a service</option>
-            <option value="cleaning">Dental Cleaning</option>
-            <option value="filling">Tooth Filling</option>
-            <option value="extraction">Tooth Extraction</option>
-            <option value="checkup">Routine Checkup</option>
-            <option value="other">Other</option>
+            {treatments?.map(({ name }, i) => (
+              <option key={i} value={name}>
+                {name}
+              </option>
+            ))}
           </select>
         </div>
 
