@@ -1,13 +1,11 @@
-import { useState } from "react";
-import Navbar from "./components/navbar";
+import Appointment from "./components/appointment";
+import MainLayout from "./layouts/main-layout";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <Navbar />
-    </>
+    <MainLayout>
+      <Appointment />
+    </MainLayout>
   );
 }
 
