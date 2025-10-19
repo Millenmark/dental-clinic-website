@@ -27,7 +27,7 @@ export default function Input({ id, label, ...props }: InputProps) {
       peer-not-placeholder-shown:scale-90
       peer-not-placeholder-shown:translate-x-0
       peer-not-placeholder-shown:-translate-y-4.5
-      peer-not-placeholder-shown:text-gray-500 "
+      peer-not-placeholder-shown:text-white"
       >
         {label}
       </label>
