@@ -3,7 +3,43 @@ import { navItems } from "../static-data";
 export default function Navbar() {
   return (
     <>
-      <div className="bg-yellow-600">asddfs</div>
+      <div className="hidden lg:flex lg:flex-wrap lg:justify-between lg:gap-10 xl:w-[96rem] mx-auto my-4">
+        <div className="flex gap-2">
+          <img src="/phone.svg" alt="Contact Us" />
+          <div>
+            <p className="font-semibold text-scooter-500 text-sm">Contact Us</p>
+            <span className="text-brand-dark font-bold">+63 993 123 3452</span>
+          </div>
+        </div>
+
+        <div className="flex gap-2">
+          <img src="/email.svg" alt="Email" />
+          <div>
+            <p className="font-semibold text-scooter-500 text-sm">Email</p>
+            <span className="text-brand-dark font-bold">
+              rkdental@mailsac.com
+            </span>
+          </div>
+        </div>
+
+        <div className="flex gap-2">
+          <img src="/mobile.svg" alt="Booking" />
+          <div>
+            <p className="font-semibold text-scooter-500 text-sm">
+              Online Appointment
+            </p>
+            <span className="text-brand-dark font-bold">Book Now</span>
+          </div>
+        </div>
+
+        <div className="flex gap-2">
+          <img src="/clock.svg" alt="Support" />
+          <div>
+            <p className="font-semibold text-scooter-500 text-sm">Supports</p>
+            <span className="text-brand-dark font-bold">Open Daily 9-5</span>
+          </div>
+        </div>
+      </div>
       <header className="sticky top-0 z-50 flex flex-wrap text-white sm:justify-start sm:flex-nowrap w-full bg-brand-dark text-sm py-3">
         <nav className="max-w-[96rem] w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between">
           <div className="flex items-center justify-between">
