@@ -137,7 +137,7 @@ export default function AppointmentForm() {
 
           <Select id="service" label="Service" options={treatments || []} />
 
-          <Textarea />
+          <Textarea id="note" label="Note" />
         </div>
 
         <button
