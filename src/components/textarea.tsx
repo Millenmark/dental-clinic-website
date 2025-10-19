@@ -1,4 +1,10 @@
-export default function Textarea({ id, label, ...props }) {
+interface TextareaProps
+  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  id: string;
+  label: string;
+}
+
+export default function Textarea({ id, label, ...props }: TextareaProps) {
   return (
     <div className="relative col-span-2">
       <textarea
