@@ -1,26 +1,33 @@
 import { useState } from "react";
 import { useTreatments } from "../hooks/use-treatment";
 import Input from "./input";
+import TimeInput from "./time-input";
+import Select from "./select";
+import Textarea from "./textarea";
 
 interface FormData {
   firstName: string;
+  middleName?: string;
+  lastName: string;
   email: string;
   phone: string;
   date: string;
   time: string;
   service: string;
-  notes: string;
+  note: string;
 }
 
 export default function AppointmentForm() {
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
+    middleName: "",
+    lastName: "",
     email: "",
     phone: "",
     date: "",
     time: "",
     service: "",
-    notes: "",
+    note: "",
   });
 
   const handleChange = (
@@ -45,167 +52,92 @@ export default function AppointmentForm() {
 
   const { data: treatments } = useTreatments();
 
+  const today = new Date();
+  const minDate = today.toISOString().split("T")[0];
+
+  const maxDate = new Date();
+  maxDate.setDate(today.getDate() + 30);
+  const maxDateStr = maxDate.toISOString().split("T")[0];
+
   return (
     <div className="w-full p-6 bg-scooter-500/80 rounded-4xl shadow-md absolute left-0 top-0">
       <h2 className="text-2xl font-bold mb-4 text-white">
         Book an Appointment
       </h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-6">
           <Input
             type="text"
             label="First Name"
             id="firstName"
             name="firstName"
+            value={formData.firstName}
             onChange={handleChange}
+            required
+            placeholder="First Name"
           />
 
-          <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Middle Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
+          <Input
+            type="text"
+            label="Middle Name"
+            id="middleName"
+            name="middleName"
+            value={formData.middleName}
+            onChange={handleChange}
+            placeholder="Middle Name"
+          />
 
-          <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Last Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
+          <Input
+            type="text"
+            label="Last Name"
+            id="lastName"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            required
+            placeholder="Last Name"
+          />
 
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
+          <Input
+            type="email"
+            label="Email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            placeholder="Email"
+          />
 
-          <div>
-            <label
-              htmlFor="phone"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Phone Number
-            </label>
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              required
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
+          <Input
+            type="tel"
+            label="Phone"
+            id="phone"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            required
+            placeholder="Phone"
+          />
 
-          <div>
-            <label
-              htmlFor="date"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Preferred Date
-            </label>
-            <input
-              type="date"
-              id="date"
-              name="date"
-              value={formData.date}
-              onChange={handleChange}
-              required
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
+          <Input
+            type="date"
+            label="Preferred Date"
+            id="date"
+            name="date"
+            value={formData.date}
+            onChange={handleChange}
+            required
+            placeholder="Preferred Date"
+            min={minDate}
+            max={maxDateStr}
+          />
 
-          <div>
-            <label
-              htmlFor="time"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Preferred Time
-            </label>
-            <input
-              type="time"
-              id="time"
-              name="time"
-              value={formData.time}
-              onChange={handleChange}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
+          <TimeInput id="time" label="Time" min="09:00" max="17:00" />
 
-          <div>
-            <label
-              htmlFor="service"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Service Type
-            </label>
-            <select
-              id="service"
-              name="service"
-              value={formData.service}
-              onChange={handleChange}
-              required
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            >
-              <option value="">Select a service</option>
-              {treatments?.map(({ name }, i) => (
-                <option key={i} value={name}>
-                  {name}
-                </option>
-              ))}
-            </select>
-          </div>
+          <Select id="service" label="Service" options={treatments || []} />
 
-          <div className="col-span-2">
-            <label
-              htmlFor="notes"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Additional Notes
-            </label>
-            <textarea
-              id="notes"
-              name="notes"
-              value={formData.notes}
-              onChange={handleChange}
-              rows={3}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
+          <Textarea />
         </div>
 
         <button
