@@ -11,7 +11,7 @@ export default function MainLayout({
       <Navbar />
 
       {/* Main content area */}
-      <main className="flex-1 container mx-auto px-4 py-8">{children}</main>
+      <main>{children}</main>
 
       {/* Optional footer */}
       <footer className="bg-gray-100 text-center py-4 text-sm text-gray-500">
