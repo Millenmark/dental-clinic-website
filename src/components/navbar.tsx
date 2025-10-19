@@ -4,7 +4,7 @@ export default function Navbar() {
   return (
     <>
       <div className="bg-yellow-600">asddfs</div>
-      <header className=" flex flex-wrap text-white sm:justify-start sm:flex-nowrap w-full bg-brand-dark text-sm py-3">
+      <header className="sticky top-0 z-50 flex flex-wrap text-white sm:justify-start sm:flex-nowrap w-full bg-brand-dark text-sm py-3">
         <nav className="max-w-[96rem] w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between">
           <div className="flex items-center justify-between">
             <a
