@@ -3,7 +3,7 @@
 :root {
   --notso-white: #f5fafd;
   --brand-dark: #031b4e;
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Poppins", system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -30,6 +30,9 @@
   --color-scooter-800: #125e78;
   --color-scooter-900: #144e65;
   --color-scooter-950: #063346;
+
+  --font-sans: "Poppins", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-poppins: "Poppins", sans-serif;
 }
 
 /* a {
@@ -42,6 +45,7 @@ a:hover {
 } */
 
 body {
+  @apply font-sans;
   /* margin: 0;
   display: flex;
   place-items: center; */
