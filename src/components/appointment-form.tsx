@@ -153,12 +153,14 @@ export default function AppointmentForm() {
             label="Time"
             min="09:00"
             max="17:00"
+            value={formData.time}
             onChange={handleChange}
           />
 
           <Select
             id="service"
             label="Service"
+            value={formData.service}
             options={treatments || []}
             onChange={handleChange}
           />
