@@ -11,6 +11,7 @@ export default function TimeInput({ id, label, ...props }: TimeInputProps) {
       <input
         type="time"
         id={id}
+        name={id}
         className="peer py-4 px-0 block w-full bg-transparent outline-0 border-t-transparent border-b-2 border-x-transparent border-b-brand-dark sm:text-sm
         placeholder:text-transparentfocus:ring-0 disabled:opacity-50 disabled:pointer-events-none
         

@@ -85,6 +85,7 @@ export default function AppointmentForm() {
             onChange={handleChange}
             required
             placeholder="First Name"
+            maxLength={50}
           />
 
           <Input
@@ -95,6 +96,7 @@ export default function AppointmentForm() {
             value={formData.middleName}
             onChange={handleChange}
             placeholder="Middle Name"
+            maxLength={50}
           />
 
           <Input
@@ -106,6 +108,7 @@ export default function AppointmentForm() {
             onChange={handleChange}
             required
             placeholder="Last Name"
+            maxLength={50}
           />
 
           <Input
@@ -117,6 +120,7 @@ export default function AppointmentForm() {
             onChange={handleChange}
             required
             placeholder="Email"
+            maxLength={50}
           />
 
           <Input
@@ -128,6 +132,7 @@ export default function AppointmentForm() {
             onChange={handleChange}
             required
             placeholder="Phone"
+            maxLength={50}
           />
 
           <Input
@@ -163,6 +168,7 @@ export default function AppointmentForm() {
             label="Note"
             value={formData.note}
             onChange={handleChange}
+            maxLength={100}
           />
         </div>
 
