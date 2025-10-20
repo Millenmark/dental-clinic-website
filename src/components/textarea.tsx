@@ -9,6 +9,7 @@ export default function Textarea({ id, label, ...props }: TextareaProps) {
     <div className="relative col-span-2">
       <textarea
         id={id}
+        name={props.name ?? id}
         className="peer py-4 px-0 block w-full bg-transparent border-t-transparent border-b-2 border-x-transparent border-b-brand-dark sm:text-sm placeholder:text-transparent outline-0   disabled:opacity-50 disabled:pointer-events-none
     focus:pt-6
     focus:pb-2
