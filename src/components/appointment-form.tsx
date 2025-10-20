@@ -155,6 +155,7 @@ export default function AppointmentForm() {
             max="17:00"
             value={formData.time}
             onChange={handleChange}
+            required
           />
 
           <Select
@@ -163,6 +164,7 @@ export default function AppointmentForm() {
             value={formData.service}
             options={treatments || []}
             onChange={handleChange}
+            required
           />
 
           <Textarea
