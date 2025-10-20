@@ -36,6 +36,16 @@ export default function AppointmentForm() {
     >
   ) => {
     const { name, value } = e.target;
+
+    // Apply per-field limits
+    const limits: Record<string, number> = {
+      note: 100,
+    };
+
+    const limit = limits[name] ?? 50; // default 50 if not specified
+
+    if (value.length > limit) return;
+
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -133,11 +143,27 @@ export default function AppointmentForm() {
             max={maxDateStr}
           />
 
-          <TimeInput id="time" label="Time" min="09:00" max="17:00" />
+          <TimeInput
+            id="time"
+            label="Time"
+            min="09:00"
+            max="17:00"
+            onChange={handleChange}
+          />
 
-          <Select id="service" label="Service" options={treatments || []} />
+          <Select
+            id="service"
+            label="Service"
+            options={treatments || []}
+            onChange={handleChange}
+          />
 
-          <Textarea id="note" label="Note" />
+          <Textarea
+            id="note"
+            label="Note"
+            value={formData.note}
+            onChange={handleChange}
+          />
         </div>
 
         <div className="flex justify-end">
