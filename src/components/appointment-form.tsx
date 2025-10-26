@@ -59,7 +59,16 @@ export default function AppointmentForm() {
     // TODO: Replace with actual API call when ready
     await fetch(`${import.meta.env.VITE_BACKEND}/api/appointments`, {
       method: "POST",
-      body: JSON.stringify(formData),
+      body: JSON.stringify({
+        first_name: formData.firstName,
+        middle_name: formData.middleName,
+        last_name: formData.lastName,
+        email: formData.email,
+        contact_number: formData.phone,
+        treatment_id: formData.service,
+        scheduled_at: `${formData.date} ${formData.time}`,
+        note: formData.note,
+      }),
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
