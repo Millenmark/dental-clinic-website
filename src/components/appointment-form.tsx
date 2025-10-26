@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
 import { useTreatments } from "../hooks/use-treatment";
 import Input from "./input";
 import TimeInput from "./time-input";
@@ -17,18 +18,22 @@ interface FormData {
   note: string;
 }
 
+const defaultFormData = {
+  firstName: "",
+  middleName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  date: "",
+  time: "",
+  service: "",
+  note: "",
+};
+
 export default function AppointmentForm() {
-  const [formData, setFormData] = useState<FormData>({
-    firstName: "",
-    middleName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    date: "",
-    time: "",
-    service: "",
-    note: "",
-  });
+  const [formData, setFormData] = useState<FormData>(defaultFormData);
+
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -36,18 +41,56 @@ export default function AppointmentForm() {
     >
   ) => {
     const { name, value } = e.target;
+
+    // Apply per-field limits
+    const limits: Record<string, number> = {
+      note: 100,
+    };
+
+    const limit = limits[name] ?? 50; // default 50 if not specified
+
+    if (value.length > limit) return;
+
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const mutation = useMutation({
+    mutationFn: async (data: FormData) => {
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND}/api/appointments`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            first_name: data.firstName,
+            middle_name: data.middleName,
+            last_name: data.lastName,
+            email: data.email,
+            contact_number: data.phone,
+            treatment_id: data.service,
+            scheduled_at: `${data.date} ${data.time}`,
+            note: data.note,
+          }),
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "X-Api-Key": import.meta.env.VITE_API_KEY,
+          },
+        }
+      );
+      return response.json();
+    },
+    onSuccess: () => {
+      setShowSuccessModal(true);
+      setFormData(defaultFormData);
+    },
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Placeholder: console.log the form data instead of sending to API
-    console.log("Booking form data:", formData);
-    // TODO: Replace with actual API call when ready
-    // Example: fetch('/api/book-appointment', { method: 'POST', body: JSON.stringify(formData) });
+    mutation.mutate(formData);
   };
 
   const { data: treatments } = useTreatments();
@@ -75,6 +118,7 @@ export default function AppointmentForm() {
             onChange={handleChange}
             required
             placeholder="First Name"
+            maxLength={50}
           />
 
           <Input
@@ -85,6 +129,7 @@ export default function AppointmentForm() {
             value={formData.middleName}
             onChange={handleChange}
             placeholder="Middle Name"
+            maxLength={50}
           />
 
           <Input
@@ -96,6 +141,7 @@ export default function AppointmentForm() {
             onChange={handleChange}
             required
             placeholder="Last Name"
+            maxLength={50}
           />
 
           <Input
@@ -107,6 +153,7 @@ export default function AppointmentForm() {
             onChange={handleChange}
             required
             placeholder="Email"
+            maxLength={50}
           />
 
           <Input
@@ -118,6 +165,7 @@ export default function AppointmentForm() {
             onChange={handleChange}
             required
             placeholder="Phone"
+            maxLength={50}
           />
 
           <Input
@@ -133,22 +181,80 @@ export default function AppointmentForm() {
             max={maxDateStr}
           />
 
-          <TimeInput id="time" label="Time" min="09:00" max="17:00" />
+          <TimeInput
+            id="time"
+            label="Time"
+            min="09:00"
+            max="17:00"
+            value={formData.time}
+            onChange={handleChange}
+            required
+          />
 
-          <Select id="service" label="Service" options={treatments || []} />
+          <Select
+            id="service"
+            label="Service"
+            value={formData.service}
+            options={treatments || []}
+            onChange={handleChange}
+            required
+          />
 
-          <Textarea id="note" label="Note" />
+          <Textarea
+            id="note"
+            label="Note"
+            value={formData.note}
+            onChange={handleChange}
+            maxLength={100}
+          />
         </div>
 
         <div className="flex justify-end">
           <button
             type="submit"
-            className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={mutation.isPending}
           >
-            Book
+            {mutation.isPending ? "Booking..." : "Book"}
           </button>
         </div>
       </form>
+
+      {/* Success Modal */}
+      {showSuccessModal && (
+        <div className="fixed inset-0 bg-black/50 bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+            <div className="text-center">
+              <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
+                <svg
+                  className="h-6 w-6 text-green-600"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+              <h3 className="text-lg text-gray-900 mb-2 font-bold">
+                Booking Successful!
+              </h3>
+              <p className="text-sm text-gray-500 mb-4">
+                Please confirm this booking on your email address that you
+                provided. Thank you
+              </p>
+              <button
+                onClick={() => setShowSuccessModal(false)}
+                className="cursor-pointer bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
