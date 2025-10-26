@@ -52,12 +52,20 @@ export default function AppointmentForm() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // Placeholder: console.log the form data instead of sending to API
     console.log("Booking form data:", formData);
     // TODO: Replace with actual API call when ready
-    // Example: fetch('/api/book-appointment', { method: 'POST', body: JSON.stringify(formData) });
+    await fetch(`${import.meta.env.VITE_BACKEND}/api/appointments`, {
+      method: "POST",
+      body: JSON.stringify(formData),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "X-Api-Key": import.meta.env.VITE_API_KEY,
+      },
+    });
   };
 
   const { data: treatments } = useTreatments();
