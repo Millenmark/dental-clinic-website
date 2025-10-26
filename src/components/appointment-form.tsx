@@ -54,9 +54,7 @@ export default function AppointmentForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Placeholder: console.log the form data instead of sending to API
-    console.log("Booking form data:", formData);
-    // TODO: Replace with actual API call when ready
+
     await fetch(`${import.meta.env.VITE_BACKEND}/api/appointments`, {
       method: "POST",
       body: JSON.stringify({
