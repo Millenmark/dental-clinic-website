@@ -7,9 +7,9 @@ export default function Confirm() {
 
   useEffect(() => {
     const search = new URLSearchParams(window.location.search);
-    const tokenParam = search.get("token");
+    const backend = search.get("url");
 
-    if (!tokenParam) {
+    if (!backend) {
       setError("Missing token.");
       setLoading(false);
       return;
@@ -17,24 +17,12 @@ export default function Confirm() {
 
     (async () => {
       try {
-        // Decode the backend URL once
-        const decodedUrl = decodeURIComponent(tokenParam.trim());
-        console.log("Decoded confirmation URL:", decodedUrl);
-
-        // Optional: basic sanity check
-        if (!decodedUrl.includes("/appointments/confirm")) {
-          setError("Invalid confirmation URL.");
-          setLoading(false);
-          return;
-        }
-
         // Send GET request directly to backend
-        const response = await fetch(decodedUrl, {
+        const response = await fetch(backend, {
           method: "GET",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            "X-Api-Key": import.meta.env.VITE_API_KEY,
           },
         });
 
