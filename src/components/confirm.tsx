@@ -40,6 +40,7 @@ export default function Confirm() {
           credentials: "include",
           headers: {
             Accept: "application/json",
+            "Content-Type": "application/json",
             "X-Api-Key": import.meta.env.VITE_API_KEY,
           },
         });
@@ -73,6 +74,7 @@ export default function Confirm() {
           setError(msg);
         }
       } catch (e) {
+        console.log("errrrro", e);
         setError("Invalid token format.");
       } finally {
         setLoading(false);
