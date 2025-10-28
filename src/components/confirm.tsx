@@ -1,43 +1,36 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Confirm() {
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string>("Processing confirmation…");
   const [loading, setLoading] = useState<boolean>(true);
 
-  const tokenParam = useMemo(() => {
-    const search = new URLSearchParams(window.location.search);
-    return search.get("token");
-  }, []);
-
   useEffect(() => {
+    const search = new URLSearchParams(window.location.search);
+    const tokenParam = search.get("token");
+
     if (!tokenParam) {
       setError("Missing token.");
       setLoading(false);
       return;
     }
 
-    // token is a URL-encoded full URL to backend with query params
     (async () => {
       try {
-        const decoded = decodeURIComponent(tokenParam);
+        // Decode the backend URL once
+        const decodedUrl = decodeURIComponent(tokenParam.trim());
+        console.log("Decoded confirmation URL:", decodedUrl);
 
-        // Validate that it points to the expected backend host/path
-        const url = new URL(decoded);
-        if (
-          url.hostname !== "dental-clinic-dashboard.test" ||
-          (!url.pathname.startsWith("/api/appointments/confirm") &&
-            !url.pathname.startsWith("/appointments/confirm"))
-        ) {
+        // Optional: basic sanity check
+        if (!decodedUrl.includes("/appointments/confirm")) {
           setError("Invalid confirmation URL.");
           setLoading(false);
           return;
         }
 
-        // Perform a GET request to backend to complete confirmation
-        const response = await fetch(decoded, {
+        // Send GET request directly to backend
+        const response = await fetch(decodedUrl, {
           method: "GET",
-          credentials: "include",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
@@ -45,46 +38,34 @@ export default function Confirm() {
           },
         });
 
-        let bodyText = "";
-        let bodyJson: any = null;
         const contentType = response.headers.get("content-type") || "";
+        let body: any = null;
+
         if (contentType.includes("application/json")) {
-          try {
-            bodyJson = await response.json();
-          } catch {
-            // ignore JSON parse errors
-          }
+          body = await response.json();
         } else {
-          try {
-            bodyText = await response.text();
-          } catch {
-            // ignore text read errors
-          }
+          body = await response.text();
         }
 
         if (response.ok) {
-          const msg = bodyJson?.message || bodyText || "Appointment confirmed.";
-          setMessage(msg);
+          setMessage(body?.message || "Appointment confirmed successfully.");
           setError(null);
         } else {
-          const msg =
-            bodyJson?.message ||
-            bodyText ||
-            `Request failed (${response.status}).`;
-          setError(msg);
+          setError(body?.message || `Request failed with ${response.status}.`);
         }
-      } catch (e) {
-        console.log("errrrro", e);
-        setError("Invalid token format.");
+      } catch (err) {
+        console.error("Error confirming appointment:", err);
+        setError("Invalid or expired token.");
       } finally {
         setLoading(false);
       }
     })();
-  }, [tokenParam]);
+  }, []);
 
   return (
-    <div className="container mx-auto py-20">
+    <div className="container mx-auto py-20 text-center">
       <h1 className="text-3xl font-bold mb-4">Appointment Confirmation</h1>
+
       {loading ? (
         <p>Processing confirmation…</p>
       ) : error ? (
