@@ -51,7 +51,7 @@ export default function Confirm() {
   }, []);
 
   return (
-    <div className="container mx-auto py-20 text-center">
+    <div className="container mx-auto h-[77.9vh] py-20 text-center">
       <h1 className="text-3xl font-bold mb-4">Appointment Confirmation</h1>
 
       {loading ? (
