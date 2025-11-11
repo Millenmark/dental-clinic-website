@@ -1,5 +1,3 @@
-import AppointmentForm from "./appointment-form";
-
 export default function Contact() {
   return (
     <div>
