@@ -125,40 +125,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-
-      {/* Appointment Section */}
-      <div className="bg-brand-dark py-16">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="text-white">
-              <h2 className="text-4xl font-bold mb-6">Ready to Get Started?</h2>
-              <p className="text-xl mb-8 text-gray-300">
-                Book your appointment today and experience the difference of
-                professional dental care.
-              </p>
-              <div className="flex items-center mb-4">
-                <img
-                  src="/doctors.png"
-                  alt="Doctors"
-                  className="w-12 h-12 mr-4"
-                />
-                <div>
-                  <h3 className="font-semibold">Expert Dental Team</h3>
-                  <p className="text-gray-300">
-                    Highly qualified professionals with years of experience
-                  </p>
-                </div>
-              </div>
-              <button className="bg-scooter-500 hover:bg-scooter-600 text-white px-8 py-4 rounded-lg font-semibold transition duration-200">
-                Schedule Now
-              </button>
-            </div>
-            <div className="bg-white p-8 rounded-lg shadow-xl">
-              <AppointmentForm />
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
