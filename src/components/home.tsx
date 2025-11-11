@@ -1,6 +1,7 @@
-import AppointmentForm from "./appointment-form";
+import { useNavigate } from "@tanstack/react-router";
 
 export default function Home() {
+  const navigate = useNavigate();
   return (
     <div>
       {/* Hero Section */}
@@ -22,7 +23,10 @@ export default function Home() {
               compassionate service
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="px-8 py-4 bg-scooter-500 hover:bg-scooter-600 text-white font-semibold rounded-lg transition duration-200">
+              <button
+                onClick={() => navigate({ to: "/appointment" })}
+                className="cursor-pointer px-8 py-4 bg-scooter-500 hover:bg-scooter-600 text-white font-semibold rounded-lg transition duration-200"
+              >
                 Book Appointment
               </button>
               <button className="px-8 py-4 border-2 border-white text-white hover:bg-white hover:text-brand-dark font-semibold rounded-lg transition duration-200">
