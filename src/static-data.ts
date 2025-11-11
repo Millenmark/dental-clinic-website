@@ -9,11 +9,31 @@ export const navItems: INav[] = [
     path: "/",
   },
   {
-    name: "Contact Us",
-    path: "/contact-us",
+    name: "About Us",
+    path: "/about",
   },
   {
-    name: "Services",
+    name: "Our Services",
     path: "/services",
+  },
+  {
+    name: "Treatments",
+    path: "/treatments",
+  },
+  {
+    name: "Our Doctors",
+    path: "/doctors",
+  },
+  {
+    name: "Testimonials",
+    path: "/testimonials",
+  },
+  {
+    name: "Insurance & Pricing",
+    path: "/pricing",
+  },
+  {
+    name: "Contact Us",
+    path: "/contact",
   },
 ];

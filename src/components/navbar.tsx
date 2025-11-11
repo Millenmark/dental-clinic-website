@@ -1,6 +1,9 @@
 import { navItems } from "../static-data";
+import { useNavigate } from "@tanstack/react-router";
 
 export default function Navbar() {
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="hidden lg:flex lg:flex-wrap lg:justify-between lg:gap-10 xl:w-[96rem] mx-auto my-4">
@@ -111,6 +114,7 @@ export default function Navbar() {
                 </a>
               ))}
               <button
+                onClick={() => navigate({ to: "/appointment" })}
                 type="button"
                 className="cursor-pointer py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
               >
