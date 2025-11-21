@@ -1,5 +1,6 @@
 // src/layouts/MainLayout.jsx
 import Navbar from "../components/navbar";
+import Footer from "../components/footer";
 
 export default function MainLayout({
   children,
@@ -13,10 +14,7 @@ export default function MainLayout({
       {/* Main content area */}
       <main>{children}</main>
 
-      {/* Optional footer */}
-      <footer className="bg-gray-100 text-center py-4 text-sm text-gray-500">
-        © {new Date().getFullYear()} My App. All rights reserved.
-      </footer>
+      <Footer />
     </div>
   );
 }
