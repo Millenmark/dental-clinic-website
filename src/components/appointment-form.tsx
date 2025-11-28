@@ -95,6 +95,8 @@ export default function AppointmentForm() {
 
   const { data: treatments } = useTreatments();
 
+  console.log(treatments)
+
   const today = new Date();
   const minDate = today.toISOString().split("T")[0];
 

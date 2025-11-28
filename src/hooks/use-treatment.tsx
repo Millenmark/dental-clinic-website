@@ -21,7 +21,9 @@ export function useTreatments() {
           },
         }
       );
-      return res.json();
+
+      const { data } = await res.json()
+      return data;
     },
   });
 
